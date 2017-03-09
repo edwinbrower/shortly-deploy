@@ -1,4 +1,5 @@
-//THIS IS A COMMENT
+// THIS IS A COMMENT
+var int = 0;
 var path = require('path');
 var knex = require('knex')({
   client: 'sqlite3',
