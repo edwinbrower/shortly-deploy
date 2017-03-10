@@ -7,13 +7,12 @@ module.exports = function(grunt) {
         separator: ';\n'
       },
       dist: {
-        src: //'src/<%= watch.name %>.js',
+        src:
         [
           'public/client/**/*.js',
           'public/lib/**/*.js'
         ],
         dest: 'public/dist/built.js'
-        // 'build/<%= pkg.name %>.min.js'
       }
     },
 
@@ -42,7 +41,6 @@ module.exports = function(grunt) {
 
     eslint: {
       target: [
-        // Add list of files to lint here
         'public/client/**/*.js',
         'public/lib/**/*.js',
         'app/**/*.js',
@@ -92,9 +90,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-shell');
   grunt.loadNpmTasks('grunt-nodemon');
 
-  grunt.registerTask('server-dev', function (target) {
-    grunt.task.run([ 'nodemon', 'watch' ]);
-  });
+  grunt.registerTask('server-dev', [ 'nodemon', 'watch' ]);
 
   ////////////////////////////////////////////////////
   // Main grunt tasks
@@ -104,21 +100,16 @@ module.exports = function(grunt) {
     'mochaTest'
   ]);
 
-  grunt.registerTask('build', [
-    grunt.task.run([ 'concat', 'uglify', 'cssmin' ])
-  ]);
+  grunt.registerTask('build', [ 'concat', 'uglify', 'cssmin' ]);
 
   grunt.registerTask('upload', function(n) {
     if (grunt.option('prod')) {
-      // add your production server task here
       grunt.task.run([ 'shell' ]);
     } else {
       grunt.task.run([ 'server-dev' ]);
     }
   });
 
-  grunt.registerTask('deploy', [
-    grunt.task.run([ 'eslint', 'test', 'build', 'upload' ])
-  ]);
+  grunt.registerTask('deploy', [ 'eslint', 'test', 'build', 'upload' ]);
 
 };
