@@ -10,7 +10,6 @@ module.exports = function(grunt) {
         src:
         [
           'public/client/**/*.js',
-          'public/lib/**/*.js'
         ],
         dest: 'public/dist/built.js'
       }
@@ -41,11 +40,12 @@ module.exports = function(grunt) {
 
     eslint: {
       target: [
+        'app/**/*.js',
         'public/client/**/*.js',
         'public/lib/**/*.js',
-        'app/**/*.js',
+        'lib/**/*.js',
         'test/**/*.js',
-        '*.js'
+        './*.js'
       ]
     },
 
@@ -76,7 +76,12 @@ module.exports = function(grunt) {
 
     shell: {
       prodServer: {
-        command: 'git push live master'
+        command: 'git push live master',
+        options: {
+          stdout: true,
+          stderr: true,
+          failOnError: true
+        }
       }
     },
   });
@@ -97,6 +102,7 @@ module.exports = function(grunt) {
   ////////////////////////////////////////////////////
 
   grunt.registerTask('test', [
+    'eslint',
     'mochaTest'
   ]);
 
@@ -110,6 +116,6 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask('deploy', [ 'eslint', 'test', 'build', 'upload' ]);
+  grunt.registerTask('deploy', [ 'test', 'build', 'upload' ]);
 
 };
